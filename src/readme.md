@@ -1,0 +1,13 @@
+- criei uma parta "projetos" em c:
+- abri esse diretório no prompt e digitei--> npm init
+- Instalação do Express --> npm install --save express
+- criação da pasta SRC e do arquivo INDEX.JS 
+- no prompt digitar--> node src/index.js
+- após conferir que está funcionando no browser no endereço localhost:3001
+
+- vamos inicializar um repositório--> git init
+- -->  git config user.name "Jovennilton Soares"
+- --> git config user.email "niltonsoares19@gmail.com"
+- para verificar o status --> git status
+- agora vamos criar o arquivo .gitignore na pasta do projeto para ignorar alguns arquivos e dentro desse arquivo digitar --> node_modules/ 
+- 
