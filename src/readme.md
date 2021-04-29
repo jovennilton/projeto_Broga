@@ -79,6 +79,7 @@ isso irá carregar os módulos da biblioteca
 isso irá criar uma pasta config e um arquivo config.jsaon no src do projeto
 
 - No prompt vontando para a pasta do projeto, vamos instalar o dotenv --> npm install --save dotenv
+- instalar um driver para o mysql --> npm install --save mysql2
 - agora na pasta do projeto vamos criar um arquivo .env e adicionar as linhas
 DB_USER=root
 DB_PASS=1234
@@ -90,4 +91,36 @@ DB_HOST=127.0.0.1
 node_modules/
 
 - agora vamos renomear o arquivo config.json para config.js
-e adicionar na primeira linha "module.exports =" {
+e fazer as modificações abaixo
+require('dotenv').config();
+
+module.exports = {
+  development: {
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    dialect: "mysql",
+    operatorsAliases: '0',
+  },
+  test: {
+    username: "root",
+    password: null,
+    database: "database_test",
+    host: "127.0.0.1",
+    dialect: "mysql",
+    operatorsAliases: '0',
+  },
+  production: {
+    username: "root",
+    password: null,
+    database: "database_production",
+    host: "127.0.0.1",
+    dialect: "mysql",
+    operatorsAliases: '0',
+  }
+}
+
+
+# CONFIGURANDO OS MODELS DO SEQUELIZE E CRIPTOGRAFANDO SENHAS
+- na pasta models vamos criar um arquivo account.js
