@@ -69,4 +69,25 @@ module.exports = router; //exportando
 
   - e agora para rodar basta apenas no prompt digitar --> npm start
 
-  
+# CONFIGURANDO O DOTENV E O SEQUILIZE
+- utilizando o MySQL com a biblioteca sequelize
+- Intalando a biblioteca
+- no prompt --> npm install -g sequelize-cli
+- no prompt entrar na pasta src e digitar --> npx sequelize-cli init:models 
+isso irá carregar os módulos da biblioteca
+- no prompt --> npx sequelize-cli init:config
+isso irá criar uma pasta config e um arquivo config.jsaon no src do projeto
+
+- No prompt vontando para a pasta do projeto, vamos instalar o dotenv --> npm install --save dotenv
+- agora na pasta do projeto vamos criar um arquivo .env e adicionar as linhas
+DB_USER=root
+DB_PASS=1234
+DB_NAME-links
+DB_HOST=127.0.0.1
+
+- agora no arquivo gitignore vamos adicionar o .env
+.env
+node_modules/
+
+- agora vamos renomear o arquivo config.json para config.js
+e adicionar na primeira linha "module.exports =" {

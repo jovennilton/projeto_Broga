@@ -1,5 +1,5 @@
 const express = require('express'); //inicialização do servidor express, o require importa o express
-
+const db = require('./models'); //importando o models
 const authController = require('./controllers/auth');// importando o arquivo auth
 
 const app = express();//inicializa a aplicação
@@ -7,12 +7,14 @@ const app = express();//inicializa a aplicação
 
 // /auth/sign-in
 // /auth/sign-up
-app.use('/auth',authController);//informa para o express a rota base 
+app.use('/auth', authController);//informa para o express a rota base 
 
-app.get('/', (req,res)=>{//definir uma rota; a / está se referindo a barra após o .com exemplo https://meusite.com/; Irá receber dois parametros request = req e o response = res
+app.get('/', (req, res) => {//definir uma rota; a / está se referindo a barra após o .com exemplo https://meusite.com/; Irá receber dois parametros request = req e o response = res
     return res.json('Api running...');//retorno o texto na página
 });
 
-app.listen(3001, () => { //excutar todas as requisições que chegarem na porta 3001; => arron function (expressão mais curta)
-    console.log('Listening on port 3001');
+db.sequelize.sync().then(() => { //o sync serve parar sincronizar
+    app.listen(3001, () => { //excutar todas as requisições que chegarem na porta 3001; => arron function (expressão mais curta)
+        console.log('Listening on port 3001');
+    });
 });
