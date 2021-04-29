@@ -1,7 +1,14 @@
 const express = require('express'); //inicialização do servidor express, o require importa o express
 
+const authController = require('./controllers/auth');// importando o arquivo auth
+
 const app = express();//inicializa a aplicação
 //metodos HTTP -> GET, POST, PUT, DELETE, PATCH ...
+
+// /auth/sign-in
+// /auth/sign-up
+app.use('/auth',authController);//informa para o express a rota base 
+
 app.get('/', (req,res)=>{//definir uma rota; a / está se referindo a barra após o .com exemplo https://meusite.com/; Irá receber dois parametros request = req e o response = res
     return res.json('Api running...');//retorno o texto na página
 });
