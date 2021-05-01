@@ -83,7 +83,7 @@ isso irá criar uma pasta config e um arquivo config.jsaon no src do projeto
 - agora na pasta do projeto vamos criar um arquivo .env e adicionar as linhas
 DB_USER=root
 DB_PASS=1234
-DB_NAME-links
+DB_NAME=links
 DB_HOST=127.0.0.1
 
 - agora no arquivo gitignore vamos adicionar o .env
@@ -124,3 +124,20 @@ module.exports = {
 
 # CONFIGURANDO OS MODELS DO SEQUELIZE E CRIPTOGRAFANDO SENHAS
 - na pasta models vamos criar um arquivo account.js
+
+module.exports = (sequelize, DataTypes) => {//nessa função que recebe o sequelize e o DataTypes do arquivo models/index.js
+    const Account = sequelize.define('Account', {
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+    });
+    return Account;
+};
+
+- vamos instalar uma biblioteca para encriptar os dados
+no prompt--> npm install --save bcrypt
