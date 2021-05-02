@@ -260,3 +260,119 @@ api.rest
 
 esse middleware servirá para colocar nossas respostas json de forma padronizada
 
+- Criando uma pasta em SRC chamada de middlewares e com um arquivo response.js
+
+
+const TYPE_JSON = 'application/json';
+const STATUS_CODE_OK = 200;
+const STATUS_CODE_BAD_REQUEST = 400;
+const STATUS_CODE_UNAUTHORIZED = 401;
+const STATUS_CODE_NOT_FOUND = 404;
+const STATUS_CODE_SERVER_ERROR = 500;
+
+const jsonOK = function(data, message, metadata){
+    const status = STATUS_CODE_OK;
+    message = (message) ? message : 'Successful request.';
+    metadata = (metadata) ? metadata : {};
+
+    this.status(status);
+    this.type(TYPE_JSON);
+    return this.json({message, data, metadata, status: status});
+};
+
+const jsonBadRequest = function(data, message, metadata){
+    const status = STATUS_CODE_BAD_REQUEST;
+    message = (message) ? message : 'Bad request.';
+    metadata = (metadata) ? metadata : {};
+
+    this.status(status);
+    this.type(TYPE_JSON);
+    return this.json({message, data, metadata, status: status});
+};
+
+const jsonUnauthorized = function(data, message, metadata){
+    const status = STATUS_CODE_UNAUTHORIZED;
+    message = (message) ? message : 'Unauthorized.';
+    metadata = (metadata) ? metadata : {};
+
+    this.status(status);
+    this.type(TYPE_JSON);
+    return this.json({message, data, metadata, status: status});
+};
+
+const jsonNotFound = function(data, message, metadata){
+    const status = STATUS_CODE_NOT_FOUND;
+    message = (message) ? message : 'Not Found.';
+    metadata = (metadata) ? metadata : {};
+
+    this.status(status);
+    this.type(TYPE_JSON);
+    return this.json({message, data, metadata, status: status});
+};
+
+const jsonServerError = function(data, message, metadata){
+    const status = STATUS_CODE_SERVER_ERROR;
+    message = (message) ? message : 'Server Error.';
+    metadata = (metadata) ? metadata : {};
+
+    this.status(status);
+    this.type(TYPE_JSON);
+    return this.json({message, data, metadata, status: status});
+};
+
+const response = (req, res, next) => {
+    
+    res.jsonOK = jsonOK;
+    res.jsonBadRequest = jsonBadRequest;
+    res.jsonUnauthorized = jsonUnauthorized;
+    res.jsonNotFound = jsonNotFound;
+    res.jsonServerError = jsonServerError;
+    next();
+};
+
+module.exports = response;
+
+
+
+
+
+--------------- AUTH.JS --------------------
+const express = require("express"); //importar o express
+const bcrypt = require('bcrypt');//importação da biblioteca para encryptar os dados
+const { Account } = require("../models");
+
+const router = express.Router(); //importar uma constante do express
+
+const saltRounds = 10;
+
+router.get('/sign-in', (req, res) => { //ao invés de usar o app.get, agora fica mais fácil utilizar a constante que foi importada
+    return res.json('Sign in');
+});
+
+router.get('/sign-up', async (req, res) => {// rota para quem quiser fazer cadastro na aplicação
+
+    const { email, password } = req.body;//vai ler o corpo dessa requisição e trazer isso
+   
+    const account = await Account.findOne({ where: {email}});
+    if( account) return res.jsonBadRequest(null, 'Account alresady exists');
+
+    const hash = bcrypt.hashSync(password,saltRounds);
+    const newAccount = await Account.create({email,password: hash}); //esse Account.create retorna uma promise
+       
+    return res.jsonOK( newAccount, 'Account created.' );
+});
+
+module.exports = router; //exportando 
+
+
+# VALIDAÇÃO DE DADOS COM MENSAGENS TRADUZIDAS
+
+- instalação da biblioteca JOI para validação dos dados de email e senha
+npm install --save @hapi/joi
+
+- na pasta SRC criar uma pasta VALIDATORS em um arquivo dentro account.js
+
+
+
+
+
