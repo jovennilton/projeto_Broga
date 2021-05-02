@@ -13,14 +13,14 @@ router.get('/sign-in', (req, res) => { //ao invés de usar o app.get, agora fica
 router.get('/sign-up', async (req, res) => {// rota para quem quiser fazer cadastro na aplicação
 
     const { email, password } = req.body;//vai ler o corpo dessa requisição e trazer isso
-
+   
     const account = await Account.findOne({ where: {email}});
-    if( account) return res.json('Account alresady exists');
+    if( account) return res.jsonBadRequest(null, 'Account alresady exists');
 
     const hash = bcrypt.hashSync(password,saltRounds);
     const newAccount = await Account.create({email,password: hash}); //esse Account.create retorna uma promise
        
-    return res.json( newAccount );
+    return res.jsonOK( newAccount, 'Account created.' );
 });
 
 module.exports = router; //exportando 
