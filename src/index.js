@@ -5,6 +5,10 @@ const authController = require('./controllers/auth');// importando o arquivo aut
 const app = express();//inicializa a aplicação
 //metodos HTTP -> GET, POST, PUT, DELETE, PATCH ...
 
+//abaixo temos dois middleware do express
+app.use(express.json());//pra receber os dados em json
+app.use(express.urlencoded({extended: false})); //receber o body da requisição e entender ele
+
 // /auth/sign-in
 // /auth/sign-up
 app.use('/auth', authController);//informa para o express a rota base 

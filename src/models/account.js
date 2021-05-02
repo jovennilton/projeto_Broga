@@ -9,5 +9,11 @@ module.exports = (sequelize, DataTypes) => {//nessa função que recebe o sequel
             allowNull: false,
         },
     });
+
+    Account.prototype.toJSON = function(){
+        const values = {...this.get() }
+        delete values.password;
+        return values;
+    }
     return Account;
 };

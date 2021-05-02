@@ -141,3 +141,57 @@ module.exports = (sequelize, DataTypes) => {//nessa função que recebe o sequel
 
 - vamos instalar uma biblioteca para encriptar os dados
 no prompt--> npm install --save bcrypt
+- no arquivo auth.js vamos importar a biblioteca
+
+-------- AUTH.JS -------------
+const express = require("express"); //importar o express
+const bcrypt = require('bcrypt');//importação da biblioteca para encryptar os dados
+const { Account } = require("../models");
+
+const router = express.Router(); //importar uma constante do express
+
+const saltRounds = 10;
+
+router.get('/sign-in', (req, res) => { //ao invés de usar o app.get, agora fica mais fácil utilizar a constante que foi importada
+    return res.json('Sign in');
+});
+
+router.get('/sign-up', async (req, res) => {// rota para quem quiser fazer cadastro na aplicação
+
+    const email = 'niltonsoares19gmail.com';
+    const password = '1234';
+
+    const hash = bcrypt.hashSync(password,saltRounds);
+    const result = await Account.create({email,password: hash}); //esse Account.create retorna uma promise
+       
+    return res.json(result);
+});
+
+module.exports = router; //exportando 
+
+
+
+
+----------------------- ACCOUNT.JS ------------------------
+module.exports = (sequelize, DataTypes) => {//nessa função que recebe o sequelize e o DataTypes do arquivo models/index.js
+    const Account = sequelize.define('Account', {
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+    });
+
+    Account.prototype.toJSON = function(){
+        const values = {...this.get() }
+        delete values.password;
+        return values;
+    }
+    return Account;
+};
+
+
+# RECEBENDO REQUISIÇÕES JSON E USANDO O PLUGIN REST CLIENT
