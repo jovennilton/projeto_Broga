@@ -8,12 +8,21 @@ module.exports = (sequelize, DataTypes) => {//nessa função que recebe o sequel
             type: DataTypes.STRING,
             allowNull: false,
         },
+       // jwtVersion: {
+         //   type: DataTypes.INTEGER,
+           // allowNull: false,
+            //defaultValue: 0,
+        //},
     });
 
+    Account.associate = (models) => {
+        Account.hasMany(models.Link, { foreignKey: "accountId" });//
+    };
+
     Account.prototype.toJSON = function(){
-        const values = {...this.get() }
+        const values = {...this.get() };
         delete values.password;
         return values;
-    }
+    };
     return Account;
 };

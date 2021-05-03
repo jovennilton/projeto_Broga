@@ -373,6 +373,9 @@ npm install --save @hapi/joi
 - na pasta SRC criar uma pasta VALIDATORS em um arquivo dentro account.js
 
 
+# IMPLEMENTANDO JSON WEB TOKENS
+- instalação do 
+npm install --save jsonwebtoken
 
 
-
+# CRUD DE ITENS DO BANCO
