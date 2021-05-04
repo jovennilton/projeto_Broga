@@ -1,7 +1,7 @@
-const messages = require('../config/messages.json');
+const messages = require("../config/messages.json");
 
 const getMessage = (path) => {
-    return messages[path] || null;
+  return messages[path];
 };
 
-module.exports = {getMessage};
+module.exports = { getMessage }; //ok

@@ -1,24 +1,26 @@
-const { getMessage } = require('./messages');
+const { getMessage } = require("./messages");
 
 const getValidatorError = (error, messagePath) => {
-    if (!error) return null;
+  if (!error) return null;
 
-    const errorMessages = {};
-    error.details.map((detail)=>{
-        const message = detail.message;
-        const type = detail.type;
-        const key = detail.context.key;
-        const path = `${messagePath}.${key}.${type}`;
+  const errorMessage = {};
+  error.details.map((detail) => {
+    const message = detail.message;
+    const type = detail.type;
+    const key = detail.context.key;
 
-        const customMessage = getMessage(path);
-        if(!customMessage){
-            console.log('customMessage not found for path:', path);
-        }
+    const path = `${messagePath}.${key}.${type}`;
 
-        errorMessages[key] = customMessage || message;
-    });
-    
-    return errorMessages;
+    const customMessage = getMessage(path);
+
+    if (customMessage === undefined) {
+      console.log("Erro to find message on path: " + path);
+    }
+
+    errorMessage[key] = customMessage || message;
+  });
+
+  return errorMessage;
 };
 
-module.exports = {getValidatorError, getMessage};
+module.exports = { getValidatorError };//ok

@@ -379,3 +379,17 @@ npm install --save jsonwebtoken
 
 
 # CRUD DE ITENS DO BANCO
+
+
+# CRIANDO UM MIDDLEWARE DE AUTENTICAÇÃO
+
+
+
+
+- npx sequelize-cli migration:create --name add_jwtVersion_to_account // instalar o migration
+
+- npx sequelize-cli db:migrate //colocar o migrate para criar os novos campos no banco de dados 
+
+- npx sequelize-cli db:migrate:undo //caso seja necessário desfazer 
+
+- npm install --save cors

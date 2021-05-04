@@ -1,15 +1,28 @@
-const { verifyJwt } = require('../helpers/jwt');//ESTE É O MEDDLEWARE RESPONSÁVEL POR VALIDAR OS TOKENS E QUAL É O ID DA REQUISIÇÃO
+const { verifyJwt, getTokenFromHeaders } = require("../helpers/jwt");
 
 const checkJwt = (req, res, next) => {
+  const { url: path } = req;
 
-    let token = headers['authorization'];
-    token = token ? token.slice(7, token.length) : null; //o slice(7, token.length) irá retirar os sete primeiros caracteres do token
+  const excludedPath = ["/auth/sign-in", "/auth/sign-up", "/auth/refresh"];
+  const isExcluded = !!excludedPath.find((p) => p.startsWith(path));
 
-    console.log('Token', token);
+  if (isExcluded) return next();
 
+  const token = getTokenFromHeaders(req.headers);
+
+  if (!token) {
+    return res.jsonUnauthorized(null, "Token invalid");
+  }
+
+  try {
+    const decoded = verifyJwt(token);
+    req.accountId = decoded.id;
 
     next();
+  } catch (error) {
+    return res.jsonUnauthorized(null, "Token invalid");
+  }
 };
 
-module.exports = checkJwt;
+module.exports = checkJwt; //ok
 
