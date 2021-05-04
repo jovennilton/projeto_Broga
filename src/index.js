@@ -1,6 +1,7 @@
 const express = require('express'); //inicialização do servidor express, o require importa o express
 const db = require('./models'); //importando o models
 const response = require('./middlewares/response');
+const checkJwt = require('./middlewares/jwt');
 
 const authController = require('./controllers/auth');// importando o arquivo auth
 const linkController = require('./controllers/link');
@@ -8,6 +9,7 @@ const linkController = require('./controllers/link');
 const app = express();//inicializa a aplicação
 //metodos HTTP -> GET, POST, PUT, DELETE, PATCH ...
 app.use(response);//abaixo temos dois middleware do express
+app.use(response);
 app.use(express.json());//pra receber os dados em json
 app.use(express.urlencoded({extended: false})); //receber o body da requisição e entender ele
 // /auth/sign-in

@@ -3,7 +3,7 @@ const {getValidatorError} = require('../helpers/validator');
 
 const rules = {
     email:Joi.string().email().required(),
-    password: Joi.string().pattern(new RegExp('^[a-zA-Z-0-9]{3,30}$')),  
+    password: Joi.string().pattern(new RegExp('^[a-zA-Z-0-9]{2,30}$')),  
     password_confirmation: Joi.string().valid(Joi.ref('password')).required(),
 }
 

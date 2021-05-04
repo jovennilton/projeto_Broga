@@ -17,9 +17,9 @@ router.post('/sign-in', accountSignIn, async (req, res) => { //ao invés de usar
     if(!match) return res.jsonBadRequest(null, getMessage('account.signin.invalid'));//se não existir é retornado credenciais invalidas
     //geração dos tokens
     const token = generateJwt({id: account.id});
-    const refreshToken = generateRefreshJwt({id: account.id, version: account.jwtVersion});//<-------, version: account.jwtVersion
+    const refreshToken = generateRefreshJwt({id: account.id});//<-------, version: account.jwtVersion
 
-    return res.jsonOK(account, getMessage('account.signin.success'), {totken, refreshToken} );
+    return res.jsonOK(account, getMessage('account.signin.success'), {token, refreshToken} );
 });
 
 router.post('/sign-up', accountSignUp, async (req, res) => {// rota para quem quiser fazer cadastro na aplicação
